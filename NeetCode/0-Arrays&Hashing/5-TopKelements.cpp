@@ -27,3 +27,63 @@ Follow up: Your algorithm's time complexity must be better than O(n log n), wher
 
 #include <bits/stdc++.h>
 using namespace std;
+
+// Approach 1: Using Frequency Tables
+class MySolution1
+{
+public:
+    vector<int> topKFrequent(vector<int> &nums, int k)
+    {
+
+        if (k > nums.size())
+            return {-1};
+
+        sort(nums.begin(), nums.end());
+
+        unordered_map<int, int> mpp;
+        int count = 1;
+        for (int i = 0; i < nums.size(); i++)
+        {
+
+            if (nums[i] != nums[i - 1])
+            {
+                mpp[nums[i - 1]] = count;
+                count = 1;
+            }
+
+            count++;
+        }
+
+        vector<int> ans;
+        int least, el;
+        int i = 0;
+        for (auto it : mpp)
+        {
+            int value = it.second;
+            int key = it.first;
+
+            if (ans.size() == 0)
+            {
+                least = value;
+                el = key;
+            }
+
+            if (i < k)
+            {
+                // Fill in while updating least
+                ans.push_back(key);
+                if (value < least)
+                {
+                    least = value;
+                    el = key;
+                }
+            }
+
+            // Else Replace the least each time and update it
+
+            i++;
+        }
+
+        return ans;
+    }
+};
