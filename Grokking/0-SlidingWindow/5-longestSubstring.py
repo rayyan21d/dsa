@@ -52,7 +52,53 @@ class Solution:
 
 
         return maxLen;
+    
+    def lengthOfLongestSubstringDict(self, s: str) -> int:
 
+        left = maxLen = 0;
+        counter = defaultdict(int)
+
+        for right in range(len(s)):
+
+            selected = s[right];
+            counter[selected] +=1;
+
+            while counter[selected] > 1:
+                freq[s[left]] -=1;
+                left += 1;
+
+            currLen = right - left + 1;
+            maxLen = max(maxLen, currLen);
+
+
+        return maxLen;
+
+
+    def lengthOfLongestSubstringSet(self, s: str) -> int:
+
+        
+        left = maxLen = 0
+        counter = set()
+
+        for right in range(len(s)):
+
+            ch = s[right];
+
+            if ch in counter:
+                # Already contains in the window
+                while ch in counter:
+                    counter.remove(s[left]);
+                    left += 1;
+
+        
+            # Add to set and expand window
+            counter.add(ch);
+            maxLen = max(right-left +1, maxLen);
+
+    
+
+        return maxLen;
+        
 
 
 
